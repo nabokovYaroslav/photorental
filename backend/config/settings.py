@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'news',
     'studios',
     "faq",
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
