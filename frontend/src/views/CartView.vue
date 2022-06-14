@@ -347,7 +347,7 @@ export default {
       today.setHours(0, 0, 0, 0);
       const dayAfterTommorow = new Date(today.getTime() + 2 * 24 * 3600 * 1000);
       if (this.startDate) {
-        const startDate = this.startDate;
+        const startDate = new Date(this.startDate.getTime());
         startDate.setHours(0, 0, 0, 0);
         return (
           date.getTime() < dayAfterTommorow.getTime() ||
