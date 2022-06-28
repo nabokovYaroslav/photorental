@@ -7,15 +7,15 @@ from categories.models import Category
 from products.models import Attribute
 
 
-class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class CategoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
 
     def get_queryset(self):
-        if self.action == "list":
+        if self.action in ("list", "retrieve"):
             return Category.objects.all()
         return Attribute.objects.filter(datatype="enum")
 
     def get_serializer_class(self):
-        if self.action == "list":
+        if self.action in ("list", "retrieve"):
             return CategorySerializer
         return FilterSerializer
 

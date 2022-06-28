@@ -9,4 +9,8 @@ export default {
     const response = await HTTP.get(`categories/${categoryId}/filters/`);
     return response;
   },
+  async detail(categoryId) {
+    const response = await HTTP.get(`categories/${categoryId}/`);
+    return response;
+  },
 };

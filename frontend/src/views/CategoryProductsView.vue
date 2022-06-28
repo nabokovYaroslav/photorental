@@ -4,7 +4,7 @@
     <section class="main">
       <div class="container">
         <div class="title">
-          <h1>Фотоаппараты</h1>
+          <h1>{{ categoryName }}</h1>
           <span></span>
         </div>
         <div class="row">
@@ -128,6 +128,7 @@ export default {
     return {
       products: [],
       productsIsLoading: false,
+      categoryName: "",
       next: null,
       checkedFilters: {},
       filters: [],
@@ -179,6 +180,9 @@ export default {
     },
   },
   created() {
+    Category.detail(this.$route.params.categoryId).then((response) => {
+      this.categoryName = response.data.name;
+    });
     Category.filters(this.$route.params.categoryId).then((response) => {
       this.filters = response.data;
       this.filters.forEach((filter) => {

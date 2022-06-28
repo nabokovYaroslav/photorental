@@ -40,7 +40,7 @@
                     </svg>
                   </div>
                   <div class="value">
-                    <a href="tel:+375(29)8258063">+375(29)8258063</a>
+                    <a href="tel:+375298258063">+375298258063</a>
                   </div>
                 </div>
               </div>
@@ -64,7 +64,9 @@
                       />
                     </svg>
                   </div>
-                  <div class="value">г.Могилёв, ул.Комсомольская, д.2</div>
+                  <div class="value">
+                    город Могилёв, улица Комсомольская, дом 2
+                  </div>
                 </div>
               </div>
               <div class="info-item">
