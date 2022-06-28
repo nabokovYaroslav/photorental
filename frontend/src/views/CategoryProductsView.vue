@@ -370,6 +370,10 @@ header {
   display: none;
 }
 
+.mobile-filters-wrapper {
+  height: 100%;
+}
+
 .filter-items-wrapper {
   padding: 10px;
   background-color: #fff;
