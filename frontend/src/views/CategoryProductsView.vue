@@ -2,7 +2,6 @@
   <main>
     <header></header>
     <section class="main">
-      <div class="filters-button"><span>Фильтры</span></div>
       <div class="container">
         <div class="title">
           <h1>Фотоаппараты</h1>
@@ -68,6 +67,45 @@
         </div>
       </div>
     </section>
+    <div class="mobile-filters" :class="{ active: isFiltersActive }">
+      <div class="mobile-filters-wrapper">
+        <span class="filters-button" @click="isFiltersActive = !isFiltersActive"
+          >Фильтры</span
+        >
+        <div class="filter-items-wrapper">
+          <div class="filter-items">
+            <div
+              class="filter-item"
+              v-for="filter in filters"
+              :key="filter.slug"
+            >
+              <span class="filter-caption">{{ filter.name }}</span>
+              <div
+                class="filter-group"
+                v-for="choice in filter.enum_group.choices"
+                :key="choice.id"
+              >
+                <input
+                  type="checkbox"
+                  :value="choice.value"
+                  v-model="
+                    checkedFilters[`eav__${filter.slug}__${filter.datatype}`]
+                  "
+                  @change="onFilterChange"
+                  :id="choice.id"
+                />
+                <label :for="choice.id">{{ choice.value }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="layout"
+      @click="isFiltersActive = !isFiltersActive"
+      :class="{ active: isFiltersActive }"
+    ></div>
   </main>
 </template>
 
@@ -94,6 +132,7 @@ export default {
       checkedFilters: {},
       filters: [],
       controller: null,
+      isFiltersActive: false,
     };
   },
   computed: {
@@ -300,33 +339,13 @@ header {
   margin: 10px 0;
 }
 
-.filters-button {
-  display: none;
-  padding: 10px 0;
-  position: fixed;
-  background: #e3e3e3;
-  border: 1px solid #eee;
-  left: 0;
-  top: calc(50% - 59.28px);
-  cursor: pointer;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-size: 20px;
-}
-
-.filters-button span {
-  writing-mode: vertical-rl;
-  color: #333;
-  pointer-events: none;
-}
-
 @media screen and (max-width: 991px) {
-  .filters-button {
-    display: block;
-  }
-
   .filters {
     display: none;
+  }
+
+  .mobile-filters {
+    display: block !important;
   }
   .products-container {
     flex: 0 0 auto;
@@ -337,4 +356,101 @@ header {
 .filters label {
   margin-left: 5px;
 }
+
+/* mobile-filters */
+
+.mobile-filters {
+  position: fixed;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  z-index: 11;
+  transition: 0.3s;
+  width: 50%;
+  display: none;
+}
+
+.filter-items-wrapper {
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: 0.3s;
+  height: 100%;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 20px 0 rgb(0 0 0 / 9%);
+}
+
+.mobile-filters .caption {
+  font-size: 17px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.mobile-filters .filter-items {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.mobile-filters .filter-items .filter-item {
+  margin: 10px 0;
+}
+
+.mobile-filters .filter-items .filter-item .filter-caption {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mobile-filters .filter-items .filter-item .filter-group {
+  margin: 10px 0;
+}
+
+.mobile-filters .filters-button {
+  padding: 10px 0;
+  background: #e3e3e3;
+  border: 1px solid #eee;
+  top: calc(50% - 50px);
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 20px;
+  writing-mode: vertical-rl;
+  color: #333;
+  position: absolute;
+  right: -25px;
+}
+
+.mobile-filters .filter-items-wrapper {
+  position: relative;
+  overflow-y: auto;
+}
+
+.mobile-filters.active {
+  transform: translate(100%, 0);
+}
+
+.mobile-filters label {
+  margin-left: 5px;
+}
+.layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  transition: 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.layout.active {
+  visibility: visible;
+  opacity: 1;
+}
+/* mobile-filters */
 </style>

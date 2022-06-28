@@ -51,7 +51,11 @@
             </router-link>
           </div>
           <div class="col-auto items">
-            <a href="#" class="burger">
+            <a
+              href="#"
+              class="burger"
+              @click.prevent="isBurgerActive = !isBurgerActive"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -112,17 +116,26 @@
         <p>Copyright © 2021-2022 | All Rights Reserved.</p>
       </div>
     </footer>
+    <mobile-menu-list
+      :active="isBurgerActive"
+      @close="isBurgerActive = false"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import MobileMenuList from "@/components/MobileMenuList";
 
 export default {
   data() {
     return {
       scrollY: 0,
+      isBurgerActive: false,
     };
+  },
+  components: {
+    MobileMenuList,
   },
   computed: {
     navActive() {
@@ -141,6 +154,15 @@ export default {
   methods: {
     onScroll() {
       this.scrollY = window.scrollY;
+    },
+  },
+  watch: {
+    isBurgerActive(value) {
+      if (value == true) {
+        document.documentElement.style.overflow = "hidden";
+      } else {
+        document.documentElement.style.overflow = "auto";
+      }
     },
   },
 };
